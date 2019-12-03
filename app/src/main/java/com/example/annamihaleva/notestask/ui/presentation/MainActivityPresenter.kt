@@ -12,7 +12,7 @@ class MainActivityPresenter @Inject constructor(
 ): MvpPresenter<MainView>() {
 
     fun onViewAttach() {
-        router.navigateTo(ActionsFragment.SCREEN)
+        router.navigateTo(ActionsFragment.SCREEN, null)
     }
 
 }

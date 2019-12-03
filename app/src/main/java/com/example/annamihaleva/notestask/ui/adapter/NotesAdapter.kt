@@ -3,6 +3,8 @@ package com.example.annamihaleva.notestask.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.annamihaleva.notestask.R
+import com.example.annamihaleva.notestask.ui.adapter.holder.BaseHolder
+import com.example.annamihaleva.notestask.ui.adapter.holder.NoteHolder
 
 
 class NotesAdapter <T>(bind : (holder: BaseHolder, pos: Int, item: T) -> Unit): BaseAdapter<T>(bind) {

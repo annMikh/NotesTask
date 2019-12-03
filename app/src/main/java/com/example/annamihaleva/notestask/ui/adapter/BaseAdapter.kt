@@ -1,6 +1,7 @@
 package com.example.annamihaleva.notestask.ui.adapter
 
 import android.support.v7.widget.RecyclerView
+import com.example.annamihaleva.notestask.ui.adapter.holder.BaseHolder
 
 abstract class BaseAdapter<T>(private val bind: (viewHolder: BaseHolder, pos: Int, item: T) -> Unit)
     : RecyclerView.Adapter<BaseHolder>() {

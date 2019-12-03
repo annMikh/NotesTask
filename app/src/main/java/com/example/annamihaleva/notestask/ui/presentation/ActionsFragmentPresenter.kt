@@ -11,10 +11,10 @@ class ActionsFragmentPresenter @Inject constructor(
 ): MvpPresenter<ActionsView>() {
 
     fun onAddNewNote() {
-        router.navigateTo(NoteFragment.SCREEN)
+        router.navigateTo(NoteFragment.SCREEN, null)
     }
 
     fun onViewAllNotes() {
-        router.navigateTo(NotesListFragment.SCREEN)
+        router.navigateTo(NotesListFragment.SCREEN, null)
     }
 }

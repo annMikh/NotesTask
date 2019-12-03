@@ -2,4 +2,5 @@
     <string name="app_name">NotesTask</string>
     <string name="add_new_note">Add new note</string>
     <string name="view_all_notes">View all notes</string>
+    <string name="save">save</string>
 </resources>

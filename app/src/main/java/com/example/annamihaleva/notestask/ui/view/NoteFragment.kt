@@ -8,32 +8,53 @@ import com.arellomobile.mvp.MvpFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.annamihaleva.notestask.R
-import com.example.annamihaleva.notestask.di.FragmentModule
-import com.example.annamihaleva.notestask.ui.presentation.NewNoteFragmentPresenter
-import com.example.annamihaleva.notestask.ui.presentation.NewNoteView
+import com.example.annamihaleva.notestask.data.entity.Note
+import com.example.annamihaleva.notestask.router.Router
+import com.example.annamihaleva.notestask.ui.presentation.NoteFragmentPresenter
+import com.example.annamihaleva.notestask.ui.presentation.NoteView
+import kotlinx.android.synthetic.main.fragment_note.*
 
-class NoteFragment: MvpFragment(), NewNoteView {
+class NoteFragment: MvpFragment(), NoteView {
+
+    private val note : Note? by lazy {
+        arguments?.getSerializable(NOTE_KEY) as? Note
+    }
 
     companion object {
         const val SCREEN = "NoteFragment"
+        const val NOTE_KEY = "note_key"
 
-        fun getInstance(): NoteFragment =
-                NoteFragment()
+        fun getInstance(data: Note?): NoteFragment {
+            val args = Bundle()
+            args.putSerializable(NOTE_KEY, data)
+            val fragment = NoteFragment()
+            fragment.arguments = args
+            return fragment
+        }
     }
 
     @InjectPresenter
-    lateinit var presenter: NewNoteFragmentPresenter
+    lateinit var presenter: NoteFragmentPresenter
 
     @ProvidePresenter
     fun providePresenter() =
-            FragmentModule().provideNewNoteFragmentPresenter()
+            NoteFragmentPresenter(Router(fragmentManager))
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_notes_list, container, false)
+            inflater.inflate(R.layout.fragment_note, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        note.let {
+            noteEdit.setText(note?.body)
+            titleEdit.setText(note?.title)
+        }
+
+        saveNote.setOnClickListener {
+            val newNote = Note(titleEdit.text.toString(), noteEdit.text.toString())
+            presenter.onSaveNoteClick(newNote)
+        }
     }
 
 }

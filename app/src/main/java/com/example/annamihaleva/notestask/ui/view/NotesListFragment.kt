@@ -9,8 +9,9 @@ import com.arellomobile.mvp.MvpFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.annamihaleva.notestask.R
-import com.example.annamihaleva.notestask.data.Note
+import com.example.annamihaleva.notestask.data.entity.Note
 import com.example.annamihaleva.notestask.di.FragmentModule
+import com.example.annamihaleva.notestask.router.Router
 import com.example.annamihaleva.notestask.ui.adapter.NotesAdapter
 import com.example.annamihaleva.notestask.ui.presentation.NotesListPresenter
 import com.example.annamihaleva.notestask.ui.presentation.NotesListView
@@ -38,7 +39,7 @@ class NotesListFragment : MvpFragment(), NotesListView {
 
     @ProvidePresenter
     fun providePresenter() =
-            FragmentModule().provideNotesListPresenter()
+            FragmentModule().provideNotesListPresenter(Router(fragmentManager))
 
 
     private lateinit var notesAdapter: NotesAdapter<Note>
@@ -62,7 +63,7 @@ class NotesListFragment : MvpFragment(), NotesListView {
             }
 
             override fun onClickUpdate(note: Note) {
-                notesAdapter.update(note)
+                presenter.onEditNoteClick(note)
             }
         }
 
@@ -76,6 +77,10 @@ class NotesListFragment : MvpFragment(), NotesListView {
 
     override fun addToList(items: List<Any>) {
         notesAdapter.addAll(items.filterIsInstance<Note>())
+    }
+
+    override fun updateNote(note: Note) {
+        notesAdapter.update(note)
     }
 
 }
