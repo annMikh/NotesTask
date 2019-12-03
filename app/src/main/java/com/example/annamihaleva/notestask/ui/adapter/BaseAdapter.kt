@@ -1,4 +1,4 @@
-package com.example.annamihaleva.notestask.presentation.adapter
+package com.example.annamihaleva.notestask.ui.adapter
 
 import android.support.v7.widget.RecyclerView
 
@@ -18,11 +18,13 @@ abstract class BaseAdapter<T>(private val bind: (viewHolder: BaseHolder, pos: In
 
     fun addAll(newItems: List<T>) {
         items.addAll(newItems)
+        notifyDataSetChanged()
     }
 
     fun remove(item: T) {
         val pos = items.indexOfFirst { it == item }
         items.removeAt(pos)
+        notifyItemRemoved(pos)
     }
 
     fun update(item: T) {
@@ -38,5 +40,5 @@ abstract class BaseAdapter<T>(private val bind: (viewHolder: BaseHolder, pos: In
     }
 
     fun getItem(index: Int) : T? =
-            items.get(index)
+            items[index]
 }

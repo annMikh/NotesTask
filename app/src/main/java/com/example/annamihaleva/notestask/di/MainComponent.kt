@@ -1,6 +1,6 @@
 package com.example.annamihaleva.notestask.di
 
-import com.example.annamihaleva.notestask.presentation.view.MainActivity
+import com.example.annamihaleva.notestask.ui.view.MainActivity
 import dagger.Component
 import javax.inject.Singleton
 

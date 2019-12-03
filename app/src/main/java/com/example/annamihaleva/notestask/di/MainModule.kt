@@ -1,18 +1,23 @@
 package com.example.annamihaleva.notestask.di
 
-import com.arellomobile.mvp.MvpPresenter
-import com.example.annamihaleva.notestask.presentation.presenter.MainActivityPresenter
-import com.example.annamihaleva.notestask.presentation.view.MainView
+import android.app.FragmentManager
+import com.example.annamihaleva.notestask.router.Router
+import com.example.annamihaleva.notestask.ui.presentation.MainActivityPresenter
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class MainModule {
+class MainModule(val fragmentManager: FragmentManager) {
 
     @Provides
     @Singleton
-    fun provideMainActivityPresenter(): MvpPresenter<MainView> =
-            MainActivityPresenter()
+    fun provideMainActivityPresenter(router: Router): MainActivityPresenter =
+            MainActivityPresenter(router)
+
+    @Provides
+    @Singleton
+    fun provideRouter(): Router =
+            Router(fragmentManager)
 
 }

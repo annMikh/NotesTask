@@ -5,24 +5,26 @@ import com.example.annamihaleva.notestask.di.*
 
 class App : Application() {
 
-    private lateinit var mainComponent: MainComponent
     private lateinit var appComponent: AppComponent
+    private lateinit var fragmentComponent: FragmentComponent
 
 
     override fun onCreate() {
         super.onCreate()
-        mainComponent = DaggerMainComponent
-                .builder()
-                .mainModule(MainModule())
-                .build()
 
         appComponent = DaggerAppComponent
                 .builder()
                 .appModule(AppModule(this))
                 .build()
+
+        fragmentComponent = DaggerFragmentComponent
+                .builder()
+                .fragmentModule(FragmentModule())
+                .build()
+
         appComponent.inject(this)
     }
 
-    fun getMainActivityComponent(): MainComponent = mainComponent
+    fun getFragmentComponent(): FragmentComponent = fragmentComponent
 
 }

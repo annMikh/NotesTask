@@ -1,4 +1,4 @@
-package com.example.annamihaleva.notestask.presentation.view
+package com.example.annamihaleva.notestask.ui.presentation
 
 import com.arellomobile.mvp.MvpView
 
