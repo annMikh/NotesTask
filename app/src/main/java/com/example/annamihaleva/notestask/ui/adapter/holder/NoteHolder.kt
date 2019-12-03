@@ -5,8 +5,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.example.annamihaleva.notestask.R
 import com.example.annamihaleva.notestask.data.entity.Note
-import com.example.annamihaleva.notestask.ui.adapter.holder.BaseHolder
-import com.example.annamihaleva.notestask.ui.view.NotesListFragment
+import com.example.annamihaleva.notestask.ui.view.fragment.NotesListFragment
 
 class NoteHolder(v: View): BaseHolder(v) {
 
@@ -16,8 +15,8 @@ class NoteHolder(v: View): BaseHolder(v) {
     private var updateNote: Button = v.findViewById(R.id.updateNote)
 
     override fun bind(callback: NotesListFragment.ListCallback?, note: Note) {
-        noteText.text = note.body.toString()
-        noteTitle.text = note.title.toString()
+        noteText.text = note.body
+        noteTitle.text = note.title
 
         deleteNote.setOnClickListener {
             callback?.onClickDelete(note)

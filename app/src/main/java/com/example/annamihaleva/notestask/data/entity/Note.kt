@@ -5,12 +5,9 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
 
-@Entity
+@Entity(tableName = "Note")
 data class Note(
-        @ColumnInfo(name = "title") val title: CharSequence,
-        @ColumnInfo(name = "body") val body: CharSequence
-) : Serializable {
-
-    @PrimaryKey(autoGenerate = true)
-    private var id: Int = 0
-}
+        @ColumnInfo(name = "title") var title: String = "",
+        @ColumnInfo(name = "body") var body: String = "",
+        @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) var id: Int = 0
+) : Serializable

@@ -1,18 +1,17 @@
-package com.example.annamihaleva.notestask.ui.view
+package com.example.annamihaleva.notestask.ui.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.MvpFragment
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.example.annamihaleva.notestask.App
 import com.example.annamihaleva.notestask.R
 import com.example.annamihaleva.notestask.data.entity.Note
-import com.example.annamihaleva.notestask.router.Router
 import com.example.annamihaleva.notestask.ui.presentation.NoteFragmentPresenter
 import com.example.annamihaleva.notestask.ui.presentation.NoteView
 import kotlinx.android.synthetic.main.fragment_note.*
+import javax.inject.Inject
 
 class NoteFragment: MvpFragment(), NoteView {
 
@@ -33,18 +32,14 @@ class NoteFragment: MvpFragment(), NoteView {
         }
     }
 
-    @InjectPresenter
-    lateinit var presenter: NoteFragmentPresenter
-
-    @ProvidePresenter
-    fun providePresenter() =
-            NoteFragmentPresenter(Router(fragmentManager))
+    @Inject lateinit var presenter: NoteFragmentPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_note, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        App.getMainComponent().inject(this)
 
         note.let {
             noteEdit.setText(note?.body)

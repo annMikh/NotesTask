@@ -5,7 +5,7 @@ import android.arch.persistence.room.RoomDatabase
 import com.example.annamihaleva.notestask.data.dao.Storage
 import com.example.annamihaleva.notestask.data.entity.Note
 
-@Database(entities = [Note::class], version = 1, exportSchema = false)
+@Database(entities = [Note::class], version = 1)
 abstract class NoteDataBase: RoomDatabase() {
 
     abstract fun access(): Storage

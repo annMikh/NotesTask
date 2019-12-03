@@ -1,4 +1,4 @@
-package com.example.annamihaleva.notestask.ui.view
+package com.example.annamihaleva.notestask.ui.view.fragment
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -6,16 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.arellomobile.mvp.MvpFragment
-import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.example.annamihaleva.notestask.App
 import com.example.annamihaleva.notestask.R
 import com.example.annamihaleva.notestask.data.entity.Note
-import com.example.annamihaleva.notestask.di.FragmentModule
-import com.example.annamihaleva.notestask.router.Router
 import com.example.annamihaleva.notestask.ui.adapter.NotesAdapter
 import com.example.annamihaleva.notestask.ui.presentation.NotesListPresenter
 import com.example.annamihaleva.notestask.ui.presentation.NotesListView
 import kotlinx.android.synthetic.main.fragment_notes_list.*
+import javax.inject.Inject
 
 
 class NotesListFragment : MvpFragment(), NotesListView {
@@ -34,13 +32,8 @@ class NotesListFragment : MvpFragment(), NotesListView {
         fun onClickUpdate(note: Note)
     }
 
-    @InjectPresenter
+    @Inject
     lateinit var presenter: NotesListPresenter
-
-    @ProvidePresenter
-    fun providePresenter() =
-            FragmentModule().provideNotesListPresenter(Router(fragmentManager))
-
 
     private lateinit var notesAdapter: NotesAdapter<Note>
 
@@ -52,12 +45,13 @@ class NotesListFragment : MvpFragment(), NotesListView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        App.getMainComponent().inject(this)
         presenter.onInit()
     }
 
 
     override fun createAdapter() {
-        val callback = object : NotesListFragment.ListCallback{
+        val callback = object : ListCallback {
             override fun onClickDelete(note: Note) {
                 notesAdapter.remove(note)
             }

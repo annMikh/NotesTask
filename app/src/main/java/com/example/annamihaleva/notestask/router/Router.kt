@@ -1,34 +1,42 @@
 package com.example.annamihaleva.notestask.router
 
+import android.app.Activity
 import android.app.FragmentManager
+import com.example.annamihaleva.notestask.App
 import com.example.annamihaleva.notestask.R
 import com.example.annamihaleva.notestask.data.entity.Note
-import com.example.annamihaleva.notestask.ui.view.ActionsFragment
-import com.example.annamihaleva.notestask.ui.view.NoteFragment
-import com.example.annamihaleva.notestask.ui.view.NotesListFragment
-import javax.inject.Inject
+import com.example.annamihaleva.notestask.ui.view.fragment.ActionsFragment
+import com.example.annamihaleva.notestask.ui.view.fragment.NoteFragment
+import com.example.annamihaleva.notestask.ui.view.fragment.NotesListFragment
 
-class Router @Inject constructor(private val fm: FragmentManager) {
+class Router {
 
-    fun navigateTo(name: String, data: Any?){
-        val transaction = fm
+    private val containerId : Int = R.id.container
+
+    private val fragmantManager: FragmentManager by lazy {
+        (App.getInstance().getCurrentActivity() as Activity).fragmentManager
+    }
+
+    fun navigateTo(name: String, data: Any?) {
+
+        val transaction = fragmantManager
                 .beginTransaction()
                 .addToBackStack(name)
 
         when(name) {
             NotesListFragment.SCREEN ->
-                transaction.replace(R.id.container, NotesListFragment.getInstance())
+                transaction.replace(containerId, NotesListFragment.getInstance())
             ActionsFragment.SCREEN ->
-                transaction.replace(R.id.container, ActionsFragment.getInstance())
+                transaction.replace(containerId, ActionsFragment.getInstance())
             NoteFragment.SCREEN ->
-                transaction.replace(R.id.container, NoteFragment.getInstance(data as? Note))
+                transaction.replace(containerId, NoteFragment.getInstance(data as? Note))
         }
 
         transaction.commit()
     }
 
-    fun backTo(name: String, data: Any?){
-
+    fun back(){
+        fragmantManager.popBackStack()
     }
 
 }
